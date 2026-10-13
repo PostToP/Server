@@ -31,22 +31,41 @@ Create a `.env` file in the project root.
 ## Run
 
 ```bash
-npm install
-npm run dev
+bun install
+bun run dev
 ```
 
 Server starts on `http://localhost:8000`.
 
+## Now Playing Badge
+
+`GET /user/:handle/now-playing.svg` returns an SVG card of what the user is currently listening to,
+for embedding in a GitHub profile README:
+
+```markdown
+![Now Playing](https://<your-host>/user/<handle>/now-playing.svg)
+```
+
+Add `?transparent` (or `?transparent=1` / `?transparent=true`) to drop the background and border,
+so the card sits directly on the page behind it.
+
+The card reads live WebSocket state, so it only shows a track while the user has an active session.
+The progress bar and the elapsed clock are SMIL animations extrapolated from the playback position at
+render time, so the card keeps ticking while it is on screen; they freeze when the track would end.
+
+GitHub proxies README images through its own cache, so a new track appears within a few minutes, not
+instantly - and a cached card starts its animation from the position it had when it was generated.
+
 ## Scripts
 
-- `npm run dev` - run in development with `ts-node` + `nodemon`
-- `npm run build` - build TypeScript output to `dist`
-- `npm run serve` - run compiled build from `dist`
+- `bun run dev` - run in development with `bun --watch`
+- `bun run build` - typecheck with `tsgo` (Bun runs the TypeScript sources directly)
+- `bun run serve` - run the server
 - `npm run seed` - run TypeScript DB seed script (local/dev)
 - `npm run seed:prod` - run compiled DB seed script (Docker/production)
-- `npm run lint` - run Biome checks
-- `npm run format` - format code with Biome
-- `npm run kysely` - generate Kysely types
+- `bun run lint` - run Biome checks
+- `bun run format` - format code with Biome
+- `bun run kysely` - generate Kysely types
 
 ## Database Seeding
 

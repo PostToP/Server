@@ -1,10 +1,7 @@
 import path from "node:path";
 import swaggerJSDoc from "swagger-jsdoc";
 
-const routeDocGlobs = [
-  path.resolve(process.cwd(), "src/api/docs/**/*.ts"),
-  path.resolve(process.cwd(), "dist/api/docs/**/*.js"),
-];
+const routeDocGlobs = [path.resolve(process.cwd(), "src/api/docs/**/*.ts")];
 
 export const swaggerSpec = swaggerJSDoc({
   definition: {
